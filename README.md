@@ -25,7 +25,7 @@ Or
         { "claim1", 0 },
         { "claim2", "claim2-value" }
     };
-    var cert = new X509Certificate2("Test.pfx");
+    var cert = new X509Certificate2("test.pfx");
     string token = JWT.JsonWebToken.Encode(payload, cert);
     Console.Out.WriteLine(token);
 
@@ -69,3 +69,16 @@ You can also deserialize the JSON payload directly to a .Net object with DecodeT
 which will output:
     
     claim2-value
+
+### Creating a JWT for the Salesforce OAuth 2.0 JWT Bearer Token Flow
+
+    var payload = new Dictionary<string, object>() {
+        { "iss", "3MVG9A2kN3Bn1...(Your Client Id)..." },
+        { "prn", "example@user.com" },
+        { "aud", "https://login.salesforce.com" },
+        { "exp", DateTime.UtcNow.Subtract(new DateTime(1970,1,1,0,0,0)).TotalSeconds }
+    };
+
+    var cert = new X509Certificate2("test.pfx");
+    string token = JWT.JsonWebToken.Encode(payload, cert);
+    Console.Out.WriteLine(token);
