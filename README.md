@@ -19,6 +19,16 @@ Output will be:
 
     eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGFpbTEiOjAsImNsYWltMiI6ImNsYWltMi12YWx1ZSJ9.8pwBI_HtXqI3UgQHQ_rDRnSQRxFL1SR8fbQoS-5kM5s
 
+Or
+
+    var payload = new Dictionary<string, object>() {
+        { "claim1", 0 },
+        { "claim2", "claim2-value" }
+    };
+    var cert = new X509Certificate2("Test.pfx");
+    string token = JWT.JsonWebToken.Encode(payload, cert);
+    Console.Out.WriteLine(token);
+
 ### Verifying and Decoding Tokens
 
     var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGFpbTEiOjAsImNsYWltMiI6ImNsYWltMi12YWx1ZSJ9.8pwBI_HtXqI3UgQHQ_rDRnSQRxFL1SR8fbQoS-5kM5s";
@@ -36,6 +46,20 @@ Output will be:
 Output will be:
 
     {"claim1":0,"claim2":"claim2-value"}
+
+Or
+
+    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGFpbTEiOjAsImNsYWltMiI6ImNsYWltMi12YWx1ZSJ9.8pwBI_HtXqI3UgQHQ_rDRnSQRxFL1SR8fbQoS-5kM5s";
+    var cert = new X509Certificate2("test.crt");               
+    try
+    {
+        string jsonPayload = JWT.JsonWebToken.Decode(token, cert);
+        Console.Out.WriteLine(jsonPayload);
+    }
+    catch (JWT.SignatureVerificationException)
+    {
+        Console.Out.WriteLine("Invalid token!");
+    }
 
 You can also deserialize the JSON payload directly to a .Net object with DecodeToObject:
 
