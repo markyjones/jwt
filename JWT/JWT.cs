@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web.Script.Serialization;
 
-namespace JWT
+namespace JWTSHA256
 {
     public enum JwtHashAlgorithm
     {
